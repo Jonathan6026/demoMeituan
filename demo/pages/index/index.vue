@@ -14,6 +14,12 @@
 	import Search from "./components/search.vue"
 	import Takeout from "./components/takeout.vue"
 	import Title from "./components/title.vue"
+	// 引入接口
+	import {listing} from "../../api/api.js"
+	//引入url接口
+	import {getpreference} from "../../api/request.js"
+	
+	
 	export default {
 		data() {
 			return {
@@ -34,15 +40,12 @@
 		methods: {
 			//perference
 			preference() {
-				uni.request({
-					url:'https://meituan.thexxdd.cn/api/forshop/getprefer',
-					methods:'GET'
+				listing(getpreference)
+				.then((res)=>{
+					console.log(res)
+					this.perferdata = res[1].data
 				})
-				.then(res=>{
-					console.log(res[1].data)
-					this.perferdata=res[1].data
-				})
-				.catch(err=>{
+				.catch((err)=>{
 					console.log(err)
 				})
 			}
