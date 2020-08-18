@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<Search></Search>
-		<Perference></Perference>
+		<Perference :perferdata='perferdata'></Perference>
 		<Title></Title>
 		<Delicacy></Delicacy>
 		<Takeout></Takeout>
@@ -17,7 +17,7 @@
 	export default {
 		data() {
 			return {
-				 
+				perferdata:[ ]
 			}
 		},
 		components: {
@@ -27,11 +27,25 @@
 			Takeout,
 			Title
 		},
-		onLoad() {
-
+		mounted() {
+			/* 利用生命周期自动执行 */
+			this.preference()
 		},
 		methods: {
-
+			//perference
+			preference() {
+				uni.request({
+					url:'https://meituan.thexxdd.cn/api/forshop/getprefer',
+					methods:'GET'
+				})
+				.then(res=>{
+					console.log(res[1].data)
+					this.perferdata=res[1].data
+				})
+				.catch(err=>{
+					console.log(err)
+				})
+			}
 		}
 	}
 </script>
