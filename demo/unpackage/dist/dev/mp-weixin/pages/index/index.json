@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "demo外卖",
+  "usingComponents": {
+    "delicacy": "/pages/index/components/delicacy",
+    "perference": "/pages/index/components/perference",
+    "search": "/pages/index/components/search",
+    "takeout": "/pages/index/components/takeout",
+    "title": "/pages/index/components/title"
+  }
+}

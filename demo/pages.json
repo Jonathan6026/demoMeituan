@@ -1,0 +1,64 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "demo外卖"
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "demo外卖",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar":{
+		"color":"#999794",
+		"selectedColor":"#33312e",
+		"borderStyle":"white",
+		"backgroundColor":"#fafafa",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"iconPath":"static/tab/shouyea.png",
+				"selectedIconPath":"static/tab/shouyeb.png",
+				"text":"首页"
+			},
+			{
+				"pagePath":"pages/order/order",
+				"iconPath":"static/tab/dingdana.png",
+				"selectedIconPath":"static/tab/dingdanb.png",
+				"text":"订单"
+			},
+			{
+				"pagePath":"pages/mine/mine",
+				"iconPath":"static/tab/wodea.png",
+				"selectedIconPath":"static/tab/wodeb.png",
+				"text":"我的"
+			}
+		]
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}
