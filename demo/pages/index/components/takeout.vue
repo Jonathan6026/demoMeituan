@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="height: 2000upx;">
 		内容
 	</view>
 </template>

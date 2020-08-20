@@ -1,6 +1,6 @@
 {
+  "component": true,
   "usingComponents": {
     "swiper": "/pages/index/components/common/swiper"
-  },
-  "component": true
+  }
 }

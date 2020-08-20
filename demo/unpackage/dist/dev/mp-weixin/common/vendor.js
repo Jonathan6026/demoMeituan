@@ -7672,9 +7672,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!******************************!*\
-  !*** D:/小程序/demo/pages.json ***!
-  \******************************/
+/*!******************************************!*\
+  !*** D:/小程序/demoMeituan/demo/pages.json ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7812,6 +7812,85 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */
+/*!******************************************!*\
+  !*** D:/小程序/demoMeituan/demo/api/api.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.listing = void 0;
+
+
+
+var _err = __webpack_require__(/*! ./err.js */ 18); // 封装请求：get post
+//面向对象
+//引入错误
+//GET
+var listing = function listing(urling) {return new Promise(function (resolve, reject) {
+    uni.request({
+      url: urling,
+      methods: 'GET' }).
+
+    then(function (res) {
+      resolve(res);
+    }).
+    catch(function (err) {
+      /* 添加错误时操作 */
+      var theerr = '请稍后再试';
+      _err.errdata.errshow(theerr);
+      reject(err);
+    });
+  });
+};
+
+// 导出
+exports.listing = listing;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 18 */
+/*!******************************************!*\
+  !*** D:/小程序/demoMeituan/demo/api/err.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.errdata = void 0; //封装错误
+var errdata = {
+  errshow: function errshow(theerr) {
+    uni.showToast({
+      title: theerr,
+      duration: 2000,
+      icon: 'none' });
+
+  } };exports.errdata = errdata;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 19 */
+/*!**********************************************!*\
+  !*** D:/小程序/demoMeituan/demo/api/request.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getpreference = void 0; //公用地址
+var url = 'https://meituan.thexxdd.cn/api/';
+
+//preference
+var getpreference = "".concat(url, "forshop/getprefer");exports.getpreference = getpreference;
 
 /***/ })
 ]]);

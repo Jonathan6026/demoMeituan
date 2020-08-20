@@ -1,0 +1,89 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 外壳 */
+.perfer-content.data-v-3ff1e3d4 {
+	margin: 30rpx 0;
+}
+.perfer-title.data-v-3ff1e3d4 {
+	font-size: 35rpx;
+	height: 50rpx;
+	line-height: 50rpx;
+	margin-bottom: 20rpx;
+}
+.scroll.data-v-3ff1e3d4 {
+	/* 必要 */
+	white-space: nowrap;
+	width: 100%;
+	height: 300rpx;
+}
+.perfer-dis.data-v-3ff1e3d4 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+/* 每一个视图 */
+.perfer-view.data-v-3ff1e3d4 {
+	height: 300rpx;
+	width: 300rpx;
+	padding: 0 8rpx;
+}
+.perfer-view image.data-v-3ff1e3d4 {
+	width: 300rpx;
+	height: 200rpx;
+	border-radius: 15rpx;
+}
+.perfer-view text.data-v-3ff1e3d4 {
+	height: 45rpx;
+	line-height: 45rpx;
+	/* 超出隐藏 */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-clamp: 1;
+	overflow: hidden;
+}
+/* 图片下面的标题和细节 */
+.perfer-view text.data-v-3ff1e3d4:nth-child(2){
+	font-size: 30rpx;
+}
+.perfer-view text.data-v-3ff1e3d4:nth-child(3) {
+	font-size: 26rpx;
+	color: #9c9c9c;
+}
+.perfer-view view.data-v-3ff1e3d4:nth-child(2) {
+	padding: 0 7rpx !important;
+}
+

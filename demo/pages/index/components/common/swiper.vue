@@ -157,7 +157,7 @@
 	/* 每个图标样式 */
 	.swiper-img {
 		 width: calc((100%/5)-12px) !important;
-		 margin: 8px;
+		 margin: 10px;
 		 position: relative;
 		 text-align: center;
 		 
