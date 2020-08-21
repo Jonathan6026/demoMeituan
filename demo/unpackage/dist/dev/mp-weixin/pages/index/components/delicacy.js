@@ -114,167 +114,173 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      ranking: '综合排序',
-      num: 0,
-      shdow: false, /* 隐藏阴影 */
-      sortlistshow: false,
-      screenShow: false,
-      /* 表面选择 */
-      sortlist: [
-      {
-        "name": "综合排序",
-        "screen": "_id",
-        "nums": 1 },
-
-      {
-        "name": "起送价最低",
-        "screen": "delivering",
-        "nums": 1 },
-
-      {
-        "name": "配送费最低",
-        "screen": "physical",
-        "nums": 1 },
-
-      {
-        "name": "人均高到低",
-        "screen": "capita",
-        "nums": -1 },
-
-      {
-        "name": "人均低到高",
-        "screen": "capita",
-        "nums": 1 }],
-
-
-      // 多选
-      screendata: [
-      {
-        "title": "商家特色(可多选)",
-        "datas": [
-        {
-          "id": 1,
-          "sign": 'duration',
-          "name": '配送最快' },
-
-        {
-          "id": 1,
-          "sign": 'deliver',
-          "name": '0元起送' },
-
-        {
-          "id": 1,
-          "sign": 'physi',
-          "name": '免配送费' }] }],
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
 
-      // 人均价筛选
-      person: [
-      {
-        "title": "人均价",
-        "datas": [
-        {
-          "name": "20元以下",
-          "per": {
-            "$lt": 20 } },
 
 
-        {
-          "name": "20-40元",
-          "per": {
-            "$lte": 40,
-            "$gte": 20 } },
 
 
-        {
-          "name": "40元以上",
-          "per": {
-            "$gt": 40 } }] }] };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _api = __webpack_require__(/*! ../../../api/api.js */ 17);
+
+var _request = __webpack_require__(/*! ../../../api/request.js */ 19); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// 引入接口
+//引入url接口
+var _default = { data: function data() {return { ranking: '综合排序', num: 0, shdow: false, /* 隐藏阴影 */sortlistshow: false, screenShow: false, /* 表面选择 */sortlist: [{ "name": "综合排序", "screen": "_id", "nums": 1 }, { "name": "起送价最低", "screen": "delivering", "nums": 1 }, { "name": "配送费最低", "screen": "physical", "nums": 1 }, { "name": "人均高到低", "screen": "capita", "nums": -1 }, { "name": "人均低到高", "screen": "capita", "nums": 1 }], // 多选
+      screendata: [{ "title": "商家特色(可多选)", "datas": [{ "id": 1, "sign": 'duration', "name": '配送最快' }, { "id": 1, "sign": 'deliver', "name": '0元起送' }, { "id": 1, "sign": 'physi', "name": '免配送费' }] }], // 人均价筛选
+      person: [{ "title": "人均价", "datas": [{ "name": "20元以下", "per": { "$lt": 20 } }, { "name": "20-40元", "per": { "$lte": 40, "$gte": 20 } }, { "name": "40元以上", "per": { "$gt": 40 } }] }] };
 
 
 
@@ -294,16 +300,36 @@ var _default =
 
       }
     },
-    /* 改变ranking 和改变index以至于改变选中颜色 */
-    changeRanking: function changeRanking(index, e) {
+
+    /* 改变ranking 和改变index以至于改变选中颜色 后续加上传递参数POST*/
+    changeRanking: function changeRanking(index, e, screen, nums) {
       this.ranking = e;
       this.num = index;
       this.shdowHide();
+
+      this.delicacyPost(screen, nums); //把screen,nums传给delicacyPost
     },
+
+    /* 拿到screen，nums之后创建一个delicacyPost通过publicing发送POST */
+    delicacyPost: function delicacyPost(screen, nums) {var _this = this;
+      var sortlistData = {
+        screen: screen, //把screen，nums传给一个对象用来发送
+        nums: nums };
+
+      (0, _api.publicing)(_request.startingUrl, sortlistData).
+      then(function (res) {
+        console.log(res);
+        _this.$store.commit('commmitDelicacy', res.data); //通过Vuex传递子组件参数
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+
     /* 阴影show */
-    shdowShow: function shdowShow() {var _this = this;
+    shdowShow: function shdowShow() {var _this2 = this;
       setTimeout(function () {
-        _this.shdow = true;
+        _this2.shdow = true;
       }, 100);
     },
     /* 阴影hide */

@@ -8,4 +8,7 @@
 	left: 0;
 	right: 0;
 }
+.takeout.data-v-57280228 {
+	margin-top: 80rpx;
+}
 

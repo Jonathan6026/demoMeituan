@@ -6,7 +6,9 @@
 		<view @click="toTop" :catchtouchmove='true'>
 			<Delicacy id='the-id' :class="{delicacyStyle:delicacyMood}"></Delicacy>
 		</view>
-		<Takeout></Takeout>
+		<view class="takeout">
+			<Takeout :takeshop='takeshop'></Takeout>
+		</view>
 	</view>
 </template>
 
@@ -19,8 +21,9 @@
 	// 引入接口
 	import {listing} from "../../api/api.js"
 	//引入url接口
-	import {getpreference} from "../../api/request.js"
-	
+	import {getpreference,wxshopurl} from "../../api/request.js"
+	//引入mapState
+	import {mapState} from 'vuex'
 	
 	export default {
 		data() {
@@ -29,7 +32,8 @@
 				delicacyTop:'',
 				pageTop:'',
 				topHigh:'',
-				delicacyMood:false		//delicacy一开始是隐藏
+				delicacyMood:false,		//delicacy一开始是隐藏
+				takeshop:[ ]            //content的数据
 			}
 		},
 		components: {
@@ -40,17 +44,21 @@
 			Title
 		},
 		methods: {
+			
 			//perference接受数据
 			preference() {
-				listing(getpreference)
+				//通过Promise.all =>可以并发多个接口
+				Promise.all([listing(getpreference),listing(wxshopurl)])
 				.then((res)=>{
 					console.log(res)
-					this.perferdata = res[1].data
+					this.perferdata = res[0].data	  //perferdata的数据
+					this.takeshop = res[1].data		  //content的数据	
 				})
 				.catch((err)=>{
 					console.log(err)
 				})
 			},
+			
 			// 回到顶部
 			toTop() {
 				uni.pageScrollTo({
@@ -80,6 +88,8 @@
 			this.preference()
 		},
 		computed: {
+			...mapState(['screenData']),				//获取state里面的screenData
+			
 			delicacyShow() {
 				if(this.delicacyTop > this.pageTop) {   //比较位置到达了没有
 					// console.log('不置顶')
@@ -88,7 +98,12 @@
 					// console.log('置顶')
 					this.delicacyMood = true            //到达就显示
 				}
+			},
+		
+			theScreenData() {
+				this.takeshop = this.screenData.delicacyData
 			}
+		
 		}
 	}
 </script>
@@ -102,6 +117,9 @@
 		top: 0;
 		left: 0;
 		right: 0;
+	}
+	.takeout {
+		margin-top: 80upx;
 	}
 </style>
 

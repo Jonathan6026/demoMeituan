@@ -9,10 +9,30 @@ let listing = function(urling) {
 	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:urling,
-			methods:'GET'
+			method:'GET'
 		})
 		.then(res=>{
-			resolve(res)
+			resolve(res[1])
+		})
+		.catch(err=>{
+			/* 添加错误时操作 */
+			let theerr = '请稍后再试'
+			errdata.errshow(theerr)
+			reject(err)
+		})
+	})
+}
+
+//POST 请求
+let publicing = function(urling,shopdata) {
+	return new Promise((resolve,reject)=>{
+		uni.request({
+			url:urling,
+			method: 'POST',
+			data:shopdata
+ 		})
+		.then(res=>{
+			resolve(res[1])
 		})
 		.catch(err=>{
 			/* 添加错误时操作 */
@@ -24,4 +44,4 @@ let listing = function(urling) {
 }
 
 // 导出
-export {listing}
+export {listing,publicing}

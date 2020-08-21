@@ -154,10 +154,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _api = __webpack_require__(/*! ../../api/api.js */ 17);
 
-var _request = __webpack_require__(/*! ../../api/request.js */ 19);var Delicacy = function Delicacy() {__webpack_require__.e(/*! require.ensure | pages/index/components/delicacy */ "pages/index/components/delicacy").then((function () {return resolve(__webpack_require__(/*! ./components/delicacy.vue */ 34));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Perference = function Perference() {__webpack_require__.e(/*! require.ensure | pages/index/components/perference */ "pages/index/components/perference").then((function () {return resolve(__webpack_require__(/*! ./components/perference.vue */ 41));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Search = function Search() {__webpack_require__.e(/*! require.ensure | pages/index/components/search */ "pages/index/components/search").then((function () {return resolve(__webpack_require__(/*! ./components/search.vue */ 48));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Takeout = function Takeout() {__webpack_require__.e(/*! require.ensure | pages/index/components/takeout */ "pages/index/components/takeout").then((function () {return resolve(__webpack_require__(/*! ./components/takeout.vue */ 55));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Title = function Title() {__webpack_require__.e(/*! require.ensure | pages/index/components/title */ "pages/index/components/title").then((function () {return resolve(__webpack_require__(/*! ./components/title.vue */ 60));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _request = __webpack_require__(/*! ../../api/request.js */ 19);
 
+var _vuex = __webpack_require__(/*! vuex */ 85);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var Delicacy = function Delicacy() {__webpack_require__.e(/*! require.ensure | pages/index/components/delicacy */ "pages/index/components/delicacy").then((function () {return resolve(__webpack_require__(/*! ./components/delicacy.vue */ 34));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Perference = function Perference() {__webpack_require__.e(/*! require.ensure | pages/index/components/perference */ "pages/index/components/perference").then((function () {return resolve(__webpack_require__(/*! ./components/perference.vue */ 41));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Search = function Search() {__webpack_require__.e(/*! require.ensure | pages/index/components/search */ "pages/index/components/search").then((function () {return resolve(__webpack_require__(/*! ./components/search.vue */ 48));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Takeout = function Takeout() {__webpack_require__.e(/*! require.ensure | pages/index/components/takeout */ "pages/index/components/takeout").then((function () {return resolve(__webpack_require__(/*! ./components/takeout.vue */ 55));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Title = function Title() {__webpack_require__.e(/*! require.ensure | pages/index/components/title */ "pages/index/components/title").then((function () {return resolve(__webpack_require__(/*! ./components/title.vue */ 62));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 {
   data: function data() {
@@ -166,7 +169,8 @@ var _request = __webpack_require__(/*! ../../api/request.js */ 19);var Delicacy 
       delicacyTop: '',
       pageTop: '',
       topHigh: '',
-      delicacyMood: false //delicacy一开始是隐藏
+      delicacyMood: false, //delicacy一开始是隐藏
+      takeshop: [] //content的数据
     };
   },
   components: {
@@ -177,17 +181,21 @@ var _request = __webpack_require__(/*! ../../api/request.js */ 19);var Delicacy 
     Title: Title },
 
   methods: {
+
     //perference接受数据
     preference: function preference() {var _this = this;
-      (0, _api.listing)(_request.getpreference).
+      //通过Promise.all =>可以并发多个接口
+      Promise.all([(0, _api.listing)(_request.getpreference), (0, _api.listing)(_request.wxshopurl)]).
       then(function (res) {
         console.log(res);
-        _this.perferdata = res[1].data;
+        _this.perferdata = res[0].data; //perferdata的数据
+        _this.takeshop = res[1].data; //content的数据	
       }).
       catch(function (err) {
         console.log(err);
       });
     },
+
     // 回到顶部
     toTop: function toTop() {
       uni.pageScrollTo({
@@ -216,7 +224,9 @@ var _request = __webpack_require__(/*! ../../api/request.js */ 19);var Delicacy 
     /* 利用生命周期自动执行 */
     this.preference();
   },
-  computed: {
+  computed: _objectSpread({},
+  (0, _vuex.mapState)(['screenData']), { //获取state里面的screenData
+
     delicacyShow: function delicacyShow() {
       if (this.delicacyTop > this.pageTop) {//比较位置到达了没有
         // console.log('不置顶')
@@ -225,7 +235,11 @@ var _request = __webpack_require__(/*! ../../api/request.js */ 19);var Delicacy 
         // console.log('置顶')
         this.delicacyMood = true; //到达就显示
       }
-    } } };exports.default = _default;
+    },
+
+    theScreenData: function theScreenData() {
+      this.takeshop = this.screenData.delicacyData;
+    } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

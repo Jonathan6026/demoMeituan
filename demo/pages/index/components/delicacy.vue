@@ -27,9 +27,9 @@
 			<!-- 综合排序 展开栏-->
 			<view class="sortlist " v-if="sortlistshow">
 				<block v-for="(item,index) of sortlist" :key="index">
-					<!-- 点击切换ranking并且颜色变化 -->
+					<!-- 综合排序的点击事件点击切换ranking并且颜色变化 -->
 					<text 
-					 @click="changeRanking(index,item.name)"
+					 @click="changeRanking(index,item.name,item.screen,item.nums)"
 					 :class="{active:index == num}"
 					>{{item.name}}</text>
 				</block>
@@ -78,6 +78,12 @@
 </template>
 
 <script>
+	// 引入接口
+	import {publicing} from "../../../api/api.js"
+	//引入url接口
+	import {startingUrl} from "../../../api/request.js"
+	
+	
 	export default {
 		data () {
 			return {
@@ -178,12 +184,32 @@
 					
 				}
 			},
-			/* 改变ranking 和改变index以至于改变选中颜色 */
-			changeRanking(index,e) {
+			
+			/* 改变ranking 和改变index以至于改变选中颜色 后续加上传递参数POST*/
+			changeRanking(index,e,screen,nums) {
 				this.ranking = e
 				this.num = index
 				this.shdowHide()
+				
+				this.delicacyPost(screen,nums)    //把screen,nums传给delicacyPost
 			},
+			
+			/* 拿到screen，nums之后创建一个delicacyPost通过publicing发送POST */
+			delicacyPost (screen,nums) {
+				let sortlistData = {   
+					screen,             //把screen，nums传给一个对象用来发送
+					nums
+				}
+				publicing(startingUrl,sortlistData)
+				.then(res => {
+					console.log(res)
+					this.$store.commit('commmitDelicacy',res.data) //通过Vuex传递子组件参数
+				})
+				.catch(err => {
+					console.log(err)
+				})
+			},
+			
 			/* 阴影show */
 			shdowShow() {
 				setTimeout(()=>{
