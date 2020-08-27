@@ -233,6 +233,75 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 筛选部分 */
 .prefer-posi {
 	position: absolute;
@@ -361,6 +430,9 @@
 	bottom: 0;
 	background: rgba(0,0,0,.5);
 }
-
-
+/* 多选框选中样式 */
+.choiceActive {
+	background-color: #fef6df !important;
+	color: #f29909 !important;
+}
 

@@ -37,36 +37,49 @@
 		
 			<!-- 筛选区 展开栏-->
 			<view class="sortlist sortlist-view" v-if="screenShow">
+				
 				<!-- 商家特色多选 -->
 				<block v-for="(item,index) of screendata" :key='index'>
 					<view>
-						<view class="sortlist-title">
+						<view class="sortlist-title">	 <!-- 多选框标题 -->
 							{{item.title}}
 						</view>
-						<view class="sortlist-flex">
+						
+						<view class="sortlist-flex">		
 							<block v-for="(itemdata,indexs) of item.datas" :key='indexs'>
-							 <text class="choice">{{itemdata.name}}</text>
+							 <text 
+								 class="choice" 
+								 :class="{choiceActive:itemdata.id === 2}"   
+								 @click="choiceMethod(indexs,itemdata.sign)"
+							 ><!--  如果等于就有样式-->
+							 {{itemdata.name}}</text>   <!-- 多选框选项-->
 							</block>
 						</view>
 					</view>
 				</block>
+				
+				
 				<!-- 人均价格单选 -->
 				<block v-for="(item,index) of person" :key='index'>
 					<view>
-						<view class="sortlist-title">
-							{{item.title}}
+						<view class="sortlist-title">	<!-- 单选标题 -->
+							{{item.title}} 				
 						</view>
 						<view class="sortlist-flex">
 						<block v-for="(itemdata,indexs) of item.datas" :key="indexs">
-							<text class="choice">{{itemdata.name}}</text>
+							<text 
+								class="choice"
+								:class="{choiceActive:indexs == singleNum}" 	
+								@click="singleMethod(indexs,itemdata.per)" 				
+							>{{itemdata.name}}</text><!-- 如果等于就有样式 -->
 						</block>
 						</view>
 					</view>
 				</block>
 				<!-- 底部按钮 -->
 				<view class="sortlist-bottom">
-					<text>清空</text>
-					<text>完成</text>
+					<text @click="allClean">清空</text>
+					<text @click="complete">完成</text>
 				</view>
 			</view>
 		</view>
@@ -81,7 +94,7 @@
 	// 引入接口
 	import {publicing} from "../../../api/api.js"
 	//引入url接口
-	import {startingUrl} from "../../../api/request.js"
+	import {startingUrl,multipleurl} from "../../../api/request.js"
 	
 	
 	export default {
@@ -92,7 +105,9 @@
 				shdow:false,/* 隐藏阴影 */
 				sortlistshow:false,
 				screenShow:false,
-				/* 表面选择 */
+				singleNum:-1,
+				multiobj:{ },		//接受筛选对象
+ 				/* 表面选择 */
 				sortlist: [
 					{
 						"name":"综合排序",
@@ -203,7 +218,8 @@
 				publicing(startingUrl,sortlistData)
 				.then(res => {
 					console.log(res)
-					this.$store.commit('commmitDelicacy',res.data) //通过Vuex传递子组件参数
+					//通过Vuex传递子组件参数
+					this.$store.commit('commmitDelicacy',res.data) 
 				})
 				.catch(err => {
 					console.log(err)
@@ -227,6 +243,59 @@
 				this.sortlistshow = false
 				this.screenShow = true
 				this.shdowShow()
+			},
+			
+			//多选Methods
+			choiceMethod(indexs,sign) {
+				if(this.screendata[0].datas[indexs].id == 1) {	//如果已经选中
+					this.screendata[0].datas[indexs].id = 2
+					this.$set(this.multiobj,sign,sign)	//把值传入对象
+					console.log(this.multiobj)
+				}else {
+					this.screendata[0].datas[indexs].id = 1
+					this.$delete(this.multiobj,sign)
+					console.log(this.multiobj)
+				}
+			},
+			
+			//单选Methods
+			singleMethod(index,per) {
+				if(this.singleNum == index) {
+					this.singleNum = -1			//未选中
+					this.$delete(this.multiobj,'capita')
+					console.log(this.multiobj)
+				} else{
+					this.singleNum = index		//选中
+					this.$set(this.multiobj,'capita',per)	//把值传入对象
+					console.log(this.multiobj)
+				}
+			},
+			
+			//全部清除
+			allClean() {
+				//遍历多选
+				this.screendata.forEach(item => {
+					let newData = item.datas.map(items => {
+						items.id = 1
+					})
+					return newData
+				})
+				
+				//单选区域
+				this.singleNum = -1
+			},
+			complete() {
+				publicing(multipleurl,this.multiobj) 
+				.then(res => {
+					console.log(res)
+					//通过Vuex传递子组件参数
+					this.$store.commit('commmitDelicacy',res.data) 
+					this.screenShow = false		 //筛选列表隐藏
+					this.shdowHide()			 //阴影隐藏
+				})
+				.catch(err => {
+					console.log(err)
+				})
 			}
 		}
 	}
@@ -345,5 +414,9 @@
 		background: rgba(0,0,0,.5);
 	}
 	
-	
+	/* 多选框选中样式 */
+	.choiceActive {
+		background-color: #fef6df !important;
+		color: #f29909 !important;
+	}
 </style>

@@ -10,4 +10,7 @@ let wxshopurl = `${url}forshop/wxshop`
 //筛选content
 let startingUrl = `${url}forshop/starting`
 
-export {getpreference,wxshopurl,startingUrl}
+//筛选多选
+let multipleurl = `${url}forshop/multiple`
+
+export {getpreference,wxshopurl,startingUrl,multipleurl}
