@@ -13,4 +13,7 @@ let startingUrl = `${url}forshop/starting`
 //筛选多选
 let multipleurl = `${url}forshop/multiple`
 
-export {getpreference,wxshopurl,startingUrl,multipleurl}
+//搜索内容
+let searchurl = `${url}forshop/search`
+
+export {getpreference,wxshopurl,startingUrl,multipleurl,searchurl}

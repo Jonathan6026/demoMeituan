@@ -15,7 +15,7 @@
 					mode=""
 					class="search-img"
 				></image>
-				<input type="text" placeholder="海底捞外卖" disabled="">
+				<input type="text" placeholder="海底捞外卖" disabled="" @click="toSearch()">
 			</view>
 		</view>
 		
@@ -32,6 +32,14 @@
 		data() {
 			return {
 				
+			}
+		},
+		methods: {
+			toSearch() {
+				//在起始页面跳转到search.vue页面并传递参数
+				uni.navigateTo({
+				    url: '../search/search'
+				});
 			}
 		},
 		components:{
