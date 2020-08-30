@@ -18,9 +18,22 @@
 			</view>
 		</view>
 		
+		<!-- 搜索历史 -->
+		<view class="search-history" v-if="historyShow">
+			<view class="search-title">
+				<view>搜索历史</view>
+				<view @click="removeStorage()"><image src="../../static/coen/searchend.svg" mode="widthFix"></image></view>
+			</view>
+			<!-- tab -->
+			<view class="menu-block">
+				<block v-for="(item,index) in historydata" :key="index">
+					<view @click="historyBtn(item)">{{item}}</view>
+				</block>
+			</view>
+		</view>
 		
 		<!-- 内容展示 -->
-		<view class="content-left" >
+		<view class="content-left" v-if="contentShow">
 			<block v-for="(item,index) of takeshop"
 			:key="index">
 				<view class="content-view">
@@ -46,10 +59,16 @@
 				</view>
 			</block>
 		</view>
+		
+		<!-- 搜索失败 -->
+		<view>
+			<common_false ref='theMethod'></common_false>
+		</view>
 	</view>
 </template>
 
 <script>
+	import common_false from '../../element/common.vue' 
 	import {searchurl} from '../../api/request.js'
 	import {publicing} from '../../api/api.js'
 	export default {
@@ -57,24 +76,76 @@
 			return {
 				//关键词
 				searchdata:'',
-				takeshop:[]
+				takeshop:[],
+				//预设搜索历史
+				historydata:[],
+				//设置历史组件是否显示
+				historyShow:false,
+				//商品内容是否展示
+				contentShow:false
 			}
+		},
+		components: {
+			common_false
 		},
 		methods: {
 			//搜索按钮事件
 			searchBtn() {
-				console.log(this.searchdata)
-				//创造一个searchCoder接受关键词然后传给Post方法
-				let searchCoder = this.searchdata
-				this.searchPost(searchCoder)
+				//如果输入内容为空，弹框
+				if(this.searchdata != '') {
+					console.log(this.searchdata)
+					//创造一个searchCoder接受关键词然后传给Post方法
+					let searchCoder = this.searchdata
+					this.searchPost(searchCoder)
+					this.getStorage(searchCoder)
+				}else {
+					uni.showToast({
+						title:'输入不能为空',
+						icon:"none"
+					})
+				}
 			},
+			
 			//回车按钮事件
 			onKeyInput(e) {
-				console.log(e.detail.value)  
-				//创造一个searchCoder接受关键词然后传给Post方法
-				let searchCoder = e.detail.value
-				this.searchPost(searchCoder)
+				//如果输入内容为空，弹框
+				if(this.searchdata != '') {
+					console.log(e.detail.value)
+					//创造一个searchCoder接受关键词然后传给Post方法
+					let searchCoder = e.detail.value
+					this.searchPost(searchCoder)
+					this.getStorage(searchCoder)
+				}else {
+					uni.showToast({
+						title:'输入不能为空',
+						icon:"none"
+					})
+				}
 			},
+			
+			//记录历史关键词方法
+			getStorage(e) {
+				//从本地缓存取出数据
+				let historyArr = uni.getStorageSync('storage_key') || [];
+				//存入数组当中
+				historyArr.unshift(e)
+				uni.setStorageSync('storage_key', historyArr);
+				this.historydata = Array.from(new Set(historyArr))
+			},
+
+			//取出本地缓存数据,并在生命周期函数中调用
+			takeStorage() {
+				let theStorage = uni.getStorageSync('storage_key')
+				//数组去重
+				this.historydata = Array.from(new Set(theStorage))
+				//历史组件是否显示
+				if(this.historydata == '') {
+					this.historyShow = false 
+				}else {
+					this.historyShow =  true
+				}
+			},
+
 			//发送搜索请求方法
 			searchPost(e) {
 				//因为传对象所以用data包裹
@@ -84,13 +155,51 @@
 				publicing(searchurl,data)
 				.then(res => {
 					console.log(res)
-					this.takeshop = res.data
+					
+					if(res.data == "没有商品数据") {
+						this.contentShow = false
+						//调用传递数据给common组件方法
+						let mood = true
+						let tips = '没有商品数据'
+						this.getCommonData(mood,tips)
+					}else {
+						this.contentShow = true
+						this.takeshop = res.data
+						//调用传递数据给common组件方法
+						let mood = false
+						let tips = ''
+						this.getCommonData(mood,tips)
+					}
 				})
 				.catch(err => {
 					console.log(err)
 				})
 				
-			} 
+			},
+			
+			//接收common组件搜索失败方法
+			getCommonData(mood,tips) {
+				this.$nextTick(() => {
+					this.$refs.theMethod.commonMethod(mood,tips)
+				})
+			},
+						
+			//清除历史缓存
+			removeStorage() {
+				uni.removeStorageSync('storage_key')
+				let theStorage = uni.getStorageSync('storage_key')
+				this.historydata = theStorage
+			},
+			
+			//历史按钮
+			historyBtn(e) {
+				this.searchdata = e
+				this.searchPost(e)
+			}
+		},
+		created() {
+			//取出本地缓存数据
+			this.takeStorage()
 		}
 	}
 </script>
@@ -148,12 +257,14 @@
 		display: block;
 	}
 	.menu-block view {
-		background: #f7f8fa;
+		background: #eeeeee;
 		border-radius: 6upx;
 		font-size: 27upx;
 		color: #292c33;
 		text-align: center;
 		padding: 10upx;
+		padding-left: 30upx;
+		padding-right: 30upx;
 		margin: 20upx 20upx 0 0;
 	}
 	

@@ -136,12 +136,14 @@
 	display: block;
 }
 .menu-block view.data-v-4cedc0c6 {
-	background: #f7f8fa;
+	background: #eeeeee;
 	border-radius: 6rpx;
 	font-size: 27rpx;
 	color: #292c33;
 	text-align: center;
 	padding: 10rpx;
+	padding-left: 30rpx;
+	padding-right: 30rpx;
 	margin: 20rpx 20rpx 0 0;
 }
 .menu-block.data-v-4cedc0c6 {

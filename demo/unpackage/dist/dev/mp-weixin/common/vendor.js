@@ -8803,6 +8803,33 @@ var index_esm = {
 /* 17 */,
 /* 18 */,
 /* 19 */
+/*!**********************************************!*\
+  !*** D:/小程序/demoMeituan/demo/api/request.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.searchurl = exports.multipleurl = exports.startingUrl = exports.wxshopurl = exports.getpreference = void 0; //公用地址
+var url = 'https://meituan.thexxdd.cn/api/';
+
+//preference
+var getpreference = "".concat(url, "forshop/getprefer");
+
+//takeout附近商家
+exports.getpreference = getpreference;var wxshopurl = "".concat(url, "forshop/wxshop");
+
+//筛选content
+exports.wxshopurl = wxshopurl;var startingUrl = "".concat(url, "forshop/starting");
+
+//筛选多选
+exports.startingUrl = startingUrl;var multipleurl = "".concat(url, "forshop/multiple");
+
+//搜索内容
+exports.multipleurl = multipleurl;var searchurl = "".concat(url, "forshop/search");exports.searchurl = searchurl;
+
+/***/ }),
+/* 20 */
 /*!******************************************!*\
   !*** D:/小程序/demoMeituan/demo/api/api.js ***!
   \******************************************/
@@ -8814,7 +8841,7 @@ var index_esm = {
 
 
 
-var _err = __webpack_require__(/*! ./err.js */ 20); // 封装请求：get post
+var _err = __webpack_require__(/*! ./err.js */ 21); // 封装请求：get post
 //面向对象
 //引入错误
 //GET
@@ -8860,7 +8887,7 @@ exports.publicing = publicing;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /*!******************************************!*\
   !*** D:/小程序/demoMeituan/demo/api/err.js ***!
   \******************************************/
@@ -8878,33 +8905,6 @@ var errdata = {
 
   } };exports.errdata = errdata;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 21 */
-/*!**********************************************!*\
-  !*** D:/小程序/demoMeituan/demo/api/request.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.searchurl = exports.multipleurl = exports.startingUrl = exports.wxshopurl = exports.getpreference = void 0; //公用地址
-var url = 'https://meituan.thexxdd.cn/api/';
-
-//preference
-var getpreference = "".concat(url, "forshop/getprefer");
-
-//takeout附近商家
-exports.getpreference = getpreference;var wxshopurl = "".concat(url, "forshop/wxshop");
-
-//筛选content
-exports.wxshopurl = wxshopurl;var startingUrl = "".concat(url, "forshop/starting");
-
-//筛选多选
-exports.startingUrl = startingUrl;var multipleurl = "".concat(url, "forshop/multiple");
-
-//搜索内容
-exports.multipleurl = multipleurl;var searchurl = "".concat(url, "forshop/search");exports.searchurl = searchurl;
 
 /***/ })
 ]]);

@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/search/search",
     "pages/index/index",
     "pages/order/order",
-    "pages/mine/mine",
-    "pages/search/search"
+    "pages/mine/mine"
   ],
   "subPackages": [],
   "window": {
@@ -43,6 +43,5 @@
       "desc": "C:\\Users\\86134\\AppData\\Local\\微信开发者工具\\"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap3.json"
+  "usingComponents": {}
 }
